@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MK Trader's — Master the Skills Before You Risk the Money.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1220;
+    --panel:#111B30;
+    --panel-line:#243354;
+    --text:#EDEFF5;
+    --muted:#8E99B0;
+    --accent:#2563EB;
+    --accent-dim:#1E4FBF;
+    --teal:#2563EB;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1, h2, .serif{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  /* ===== NAV ===== */
+  nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(14,22,32,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--panel-line);
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:78px;
+  }
+  .brand{
+    font-family:'Newsreader', serif;
+    font-size:22px;
+    font-weight:600;
+    color:var(--text);
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .brand .mark{
+    color:var(--accent);
+  }
+  .nav-links{
+    display:flex;
+    gap:40px;
+    align-items:center;
+  }
+  .nav-links a{
+    position:relative;
+    font-size:15px;
+    color:var(--muted);
+    padding:6px 0;
+    transition:color .2s ease;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    width:100%;
+    height:1px;
+    background:var(--accent);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .28s ease;
+  }
+  .nav-links a:hover{ color:var(--text); }
+  .nav-links a:hover::after{ transform:scaleX(1); }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 22px;
+    border:1px solid var(--accent);
+    color:var(--accent);
+    font-size:14.5px;
+    font-weight:500;
+    border-radius:2px;
+    transition:background .25s ease, color .25s ease, transform .15s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{
+    background:var(--accent);
+    color:#FFFFFF;
+    transform:translateY(-1px);
+  }
+  .btn.small{ padding:9px 18px; font-size:13.5px; }
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:100px 0 110px;
+    border-bottom:1px solid var(--panel-line);
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:60px;
+    align-items:center;
+  }
+  .eyebrow-line{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:26px;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .eyebrow-line span.rule{
+    width:34px;
+    height:1px;
+    background:var(--accent-dim);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(38px, 4.6vw, 60px);
+    line-height:1.08;
+    color:var(--text);
+    max-width:11ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--accent);
+  }
+  .hero p.lede{
+    margin-top:26px;
+    max-width:46ch;
+    color:var(--muted);
+    font-size:17px;
+  }
+  .hero-ctas{
+    margin-top:38px;
+    display:flex;
+    gap:16px;
+    align-items:center;
+  }
+  .hero-ctas .ghost{
+    color:var(--muted);
+    font-size:14.5px;
+    border-bottom:1px solid var(--panel-line);
+    padding-bottom:2px;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .hero-ctas .ghost:hover{
+    color:var(--text);
+    border-color:var(--muted);
+  }
+
+  .chart-box{
+    position:relative;
+    border:1px solid var(--panel-line);
+    background:linear-gradient(180deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02));
+    border-radius:3px;
+    padding:26px 24px 20px;
+  }
+  .chart-box .cb-head{
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:14px;
+    font-variant-numeric:tabular-nums;
+  }
+  .chart-box svg{ width:100%; height:auto; display:block; }
+  .chart-path{
+    stroke-dasharray:900;
+    stroke-dashoffset:900;
+    animation:draw 2.1s ease forwards .35s;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  .chart-box .cb-foot{
+    margin-top:14px;
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:var(--muted);
+    border-top:1px solid var(--panel-line);
+    padding-top:12px;
+  }
+  .cb-foot .good{ color:var(--teal); }
+
+  /* ===== CURRICULUM ===== */
+  .curriculum{
+    padding:100px 0 60px;
+  }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:50px;
+    gap:30px;
+  }
+  .section-head h2{
+    font-size:clamp(28px, 3vw, 36px);
+    max-width:16ch;
+  }
+  .section-head p{
+    color:var(--muted);
+    max-width:34ch;
+    font-size:15px;
+    padding-bottom:4px;
+  }
+
+  .curric-row{
+    display:grid;
+    grid-template-columns:64px 1fr 1.1fr 24px;
+    gap:28px;
+    align-items:center;
+    padding:26px 18px;
+    border-top:1px solid var(--panel-line);
+    transition:background .25s ease;
+    cursor:default;
+  }
+  .curriculum-list .curric-row:last-child{
+    border-bottom:1px solid var(--panel-line);
+  }
+  .curric-row:hover{
+    background:var(--panel);
+  }
+  .curric-row .num{
+    font-family:'Newsreader', serif;
+    font-size:20px;
+    color:var(--accent-dim);
+    transition:color .25s ease;
+  }
+  .curric-row:hover .num{ color:var(--accent); }
+
+  .curric-row h3{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    font-size:21px;
+    color:var(--text);
+  }
+  .curric-row .desc{
+    color:var(--muted);
+    font-size:14.5px;
+    max-width:52ch;
+  }
+  .curric-row .arrow{
+    color:var(--accent);
+    opacity:0;
+    transform:translateX(-6px);
+    transition:opacity .25s ease, transform .25s ease;
+    font-size:18px;
+    justify-self:end;
+  }
+  .curric-row:hover .arrow{
+    opacity:1;
+    transform:translateX(0);
+  }
+
+  /* ===== CTA STRIP ===== */
+  .cta-strip{
+    margin:100px 0;
+  }
+  .cta-strip .wrap{
+    border:1px solid var(--panel-line);
+    border-radius:3px;
+    padding:56px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    background:radial-gradient(circle at 85% 20%, rgba(37,99,235,0.10), transparent 60%);
+  }
+  .cta-strip h2{
+    font-size:28px;
+    max-width:16ch;
+  }
+  .cta-strip .sub{
+    color:var(--muted);
+    margin-top:10px;
+    font-size:15px;
+    max-width:40ch;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    border-top:1px solid var(--panel-line);
+    padding:44px 0;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  footer .brand{ font-size:18px; }
+  footer .slogan{
+    color:var(--muted);
+    font-size:13.5px;
+    font-style:italic;
+    font-family:'Newsreader', serif;
+  }
+  footer .copyright{
+    color:#5C6672;
+    font-size:12.5px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 860px){
+    .wrap{ padding:0 22px; }
+    .hero .wrap{ grid-template-columns:1fr; }
+    .chart-box{ order:-1; }
+    .nav-links{ display:none; }
+    .curric-row{
+      grid-template-columns:40px 1fr;
+      row-gap:8px;
+    }
+    .curric-row .desc{ grid-column:2 / 3; }
+    .curric-row .arrow{ display:none; }
+    .section-head{ flex-direction:column; align-items:flex-start; }
+    .cta-strip .wrap{ flex-direction:column; align-items:flex-start; padding:38px 26px; }
+  }
+
+  /* Accessibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .chart-path{ animation:none; stroke-dashoffset:0; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="mark">MK</span> Trader's</div>
+    <div class="nav-links">
+      <a href="#curriculum">Curriculum</a>
+      <a href="#about">Approach</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn small">Start Learning</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow-line"><span class="rule"></span> Trading Education, Done in Order</div>
+      <h1>Master the Skills Before You <em>Risk the Money.</em></h1>
+      <p class="lede">MK Trader's teaches the market the way it should be learned — fundamentals first, discipline always, and real money last. Seven stages, no shortcuts.</p>
+      <div class="hero-ctas">
+        <a href="#curriculum" class="btn">View the Curriculum</a>
+        <a href="#contact" class="ghost">Talk to a mentor →</a>
+      </div>
+    </div>
+
+    <div class="chart-box" aria-hidden="true">
+      <div class="cb-head"><span>EUR/USD</span><span>1H</span></div>
+      <svg viewBox="0 0 360 160" fill="none">
+        <line x1="0" y1="40" x2="360" y2="40" stroke="#243040" stroke-width="1"/>
+        <line x1="0" y1="80" x2="360" y2="80" stroke="#243040" stroke-width="1"/>
+        <line x1="0" y1="120" x2="360" y2="120" stroke="#243040" stroke-width="1"/>
+        <path class="chart-path" d="M0,120 L30,110 L55,124 L80,95 L105,102 L130,70 L155,82 L180,55 L205,64 L230,40 L255,52 L280,30 L305,42 L330,20 L360,28"
+          stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M0,120 L30,110 L55,124 L80,95 L105,102 L130,70 L155,82 L180,55 L205,64 L230,40 L255,52 L280,30 L305,42 L330,20 L360,28 L360,160 L0,160 Z"
+          fill="url(#fadeFill)" opacity="0.5"/>
+        <defs>
+          <linearGradient id="fadeFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2563EB" stop-opacity="0.22"/>
+            <stop offset="1" stop-color="#2563EB" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="cb-foot">
+        <span>Practice account</span>
+        <span class="good">Zero capital at risk</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="curriculum" id="curriculum">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="serif">A seven-stage path, built to be followed in order</h2>
+      <p>Each stage builds on the last. You don't move to real money until the fundamentals are second nature.</p>
+    </div>
+
+    <div class="curriculum-list">
+      <div class="curric-row">
+        <div class="num">01</div>
+        <h3>Trading Fundamentals</h3>
+        <div class="desc">Markets, order types, and the vocabulary you need before anything else makes sense.</div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="curric-row">
+        <div class="num">02</div>
+        <h3>Technical Analysis Basics</h3>
+        <div class="desc">Read price charts, spot trends, and understand what indicators are actually telling you.</div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="curric-row">
+        <div class="num">03</div>
+        <h3>Trading Strategy Training</h3>
+        <div class="desc">Build a repeatable approach instead of guessing trade by trade.</div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="curric-row">
+        <div class="num">04</div>
+        <h3>Risk Management</h3>
+        <div class="desc">Position sizing, stop-losses, and protecting your capital before chasing profit.</div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="curric-row">
+        <div class="num">05</div>
+        <h3>Trading Psychology</h3>
+        <div class="desc">Recognize and control the emotional decisions that break good strategies.</div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="curric-row">
+        <div class="num">06</div>
+        <h3>Demo Trading Practice</h3>
+        <div class="desc">Apply every lesson in a live market, with zero financial risk.</div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="curric-row">
+        <div class="num">07</div>
+        <h3>Trading Plan &amp; Journal</h3>
+        <div class="desc">Document your rules and track every trade so you keep improving after the course ends.</div>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip" id="contact">
+  <div class="wrap">
+    <div>
+      <h2 class="serif">Start where every trader should — with the skills.</h2>
+      <p class="sub">Book a short call with MK Trader's and we'll place you at the right stage of the curriculum.</p>
+    </div>
+    <a href="#" class="btn">Book a Call</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">MK Trader's</div>
+    <div class="slogan">"Master the Skills Before You Risk the Money."</div>
+    <div class="copyright">© 2026 MK Trader's. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
